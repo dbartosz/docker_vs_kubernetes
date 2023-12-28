@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build: 
+      context: .
+      target: development
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./src:/src
+    links:
+      - mongo
+    networks:
+      - backend_network
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_DATABASE=test_db
+    ports:
+      - 27017:27017
+    volumes:
+      - db:/data/db
+    networks:
+      - backend_network
+    healthcheck:
+      test: ["CMD","mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 3s
+
+volumes:
+  db:
+
+networks:
+  backend_network:
+    driver: bridge

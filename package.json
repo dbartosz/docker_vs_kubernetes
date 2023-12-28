@@ -1,0 +1,28 @@
+{
+  "name": "docker_vs_kubernetes",
+  "author": "dawid.bartosz@j-labs.pl",
+  "version": "1.0.0",
+  "description": "Example for setting up simple contenerized application",
+  "main": "./src/index.js",
+  "engines": {
+    "npm": ">=10.2.3",
+    "node": ">=20.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon --inspect ./src/index.js",
+    "build": "webpack --stats-error-details"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
